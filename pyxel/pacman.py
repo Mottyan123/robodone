@@ -48,8 +48,8 @@ def object_move():
     
     #*********オブジェクト処理*************
     if game_time > 0 and frame % 60 == 0:
-        object_x = random.randint(0, pyxel.width - 8)
-        object_y = random.randint(0, pyxel.height - 8)
+        object_x = random.randint(0, pyxel.width - 16)
+        object_y = random.randint(0, pyxel.height - 16)
 
 #*******************************************************************************************************************************************************************************************************
 def enemy_move():
@@ -136,7 +136,15 @@ def player_move():
 
 #*****************************************************************************************************************************************************************************************************
 
-def restart(): # 初期化
+def game_start(): # ゲームスタート処理
+    global game_ctl
+    
+    if pyxel.btnp(pyxel.KEY_SPACE):
+        game_ctl = 1
+
+#*****************************************************************************************************************************************************************************************************
+
+def restart(): # 初期化(初期設定)
     global player_x, player_y, player_effect_x, player_effect_y, object_x, object_y, enemy_x, enemy_y
     global game_time
     global score
@@ -154,18 +162,9 @@ def restart(): # 初期化
     enemy_y = -16 # 敵の初期位置
     message = ""
 
-#*****************************************************************************************************************************************************************************************************
-
-def game_start(): # ゲームスタート判定
-    global game_ctl
-    
-    if pyxel.btnp(pyxel.KEY_SPACE):
-        game_ctl = 1
-        restart()
-
 #***********************************************************************************************************************************************************************************************************
 
-def game_over(): # ゲームオーバー判定\
+def game_over(): # ゲームオーバー判定
     global message
     
     if game_time == 0:
@@ -179,13 +178,13 @@ def update():
     if game_ctl == 0:
         game_start()
     else:
-        game_over()
         limit_time()
         score_count()
         object_move()
         enemy_move()
-        hit_check()
         player_move()
+        hit_check()
+        game_over()
 
 #**********************************************************************************************************************************************************************************************************
 
@@ -202,17 +201,15 @@ def draw():
         pyxel.text(5, 5, "SCORE:", 7)
         pyxel.text(30, 5, str(score), 10)
         pyxel.text(64, 64, message, frame % 16)
-        pyxel.blt(object_x, object_y, 0, 0, 32, 16, 16, 0) # オブジェクト
+        pyxel.blt(object_x, object_y, 0, 0, 32, 16, 16, 0) # object
         pyxel.blt(enemy_x, enemy_y, 0, 0, 48, 16, 16, 0) # enemy
-        pyxel.blt(player_x, player_y, 0, player_effect_x, player_effect_y, 16, 16, 0) # プレイヤー
+        pyxel.blt(player_x, player_y, 0, player_effect_x, player_effect_y, 16, 16, 0) # player
 
 #*************************************************************************************************************************************************************************************************************
 
 def __init__():
     global game_ctl
-    
-    game_ctl = 0
-    
+    game_ctl = 0 # ゲーム場面制御
     restart() # 初期化
     
     pyxel.init(256,256) # 画面サイズ
