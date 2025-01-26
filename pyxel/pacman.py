@@ -267,7 +267,7 @@ def player_move():
     if (pyxel.btn(pyxel.KEY_RIGHT)) and not (pyxel.btn(pyxel.KEY_LEFT)) and not (pyxel.btn(pyxel.KEY_UP)) and not (pyxel.btn(pyxel.KEY_DOWN)) and game_time > 0:
         player_x += (PLAYER_SPEED + add_speed)
         if speed_flag == True:
-            if frame % 8 == 0:
+            if frame % 2 == 0:
                 player_effect_x = pyxel.rndi(0, 8)*16
                 player_effect_y = 64
             else:
@@ -283,7 +283,7 @@ def player_move():
     if (pyxel.btn(pyxel.KEY_LEFT)) and not (pyxel.btn(pyxel.KEY_RIGHT)) and not (pyxel.btn(pyxel.KEY_UP)) and not (pyxel.btn(pyxel.KEY_DOWN)) and game_time > 0:
         player_x -= (PLAYER_SPEED + add_speed)
         if speed_flag == True:
-            if frame % 8 == 0:
+            if frame % 2 == 0:
                 player_effect_x = pyxel.rndi(0, 8)*16
                 player_effect_y = 64
             else:
@@ -299,7 +299,7 @@ def player_move():
     if (pyxel.btn(pyxel.KEY_UP)) and not (pyxel.btn(pyxel.KEY_DOWN)) and not (pyxel.btn(pyxel.KEY_RIGHT)) and not (pyxel.btn(pyxel.KEY_LEFT)) and game_time > 0:
         player_y -= (PLAYER_SPEED + add_speed)
         if speed_flag == True:
-            if frame % 8 == 0:
+            if frame % 2 == 0:
                 player_effect_x = pyxel.rndi(0, 8)*16
                 player_effect_y = 64
             else:
@@ -315,7 +315,7 @@ def player_move():
     if (pyxel.btn(pyxel.KEY_DOWN)) and not (pyxel.btn(pyxel.KEY_UP)) and not (pyxel.btn(pyxel.KEY_RIGHT)) and not (pyxel.btn(pyxel.KEY_LEFT)) and game_time > 0:
         player_y += (PLAYER_SPEED + add_speed)
         if speed_flag == True:
-            if frame % 8 == 0:
+            if frame % 2 == 0:
                 player_effect_x = pyxel.rndi(0, 8)*16
                 player_effect_y = 64
             else:
