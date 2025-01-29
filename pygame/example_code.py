@@ -45,19 +45,19 @@ def player_move():
 #************************************************************************************************************************************************************************************************************
 
 def object_move():
-    global object
+    global object1
     
-    object.centerx += OBJECT_SPEED
+    object1.centerx += OBJECT_SPEED
     
-    if object.left > 720:
-        object.left = 0
+    if object1.left > 720:
+        object1.left = 0
 
 #************************************************************************************************************************************************************************************************************
 
 def hit_check():
     global player
     
-    if player.colliderect(object): # プレイヤーとオブジェクトの当たり判定
+    if player.colliderect(object1): # プレイヤーとオブジェクトの当たり判定
         player.bottomright = (720, 480)
 
 #************************************************************************************************************************************************************************************************************
@@ -71,18 +71,18 @@ def timer():
 #************************************************************************************************************************************************************************************************************
 
 def reset():
-    global background_image, object_image, object, player_image, player # Pygameのインスタンスをグローバル化
+    global background_image, object_image, object1, player_image, player # Pygameのインスタンスをグローバル化
     global reset_time, time
     
     background_image = pygame.image.load(r"C:\Users\hkazu\OneDrive\ドキュメント\ロボ団\pygame\images\background.png") # 背景画像の読み込み
     background_image = pygame.transform.smoothscale(background_image, (720, 480)) # 背景画像のリサイズ
     object_image = pygame.image.load(r"C:\Users\hkazu\OneDrive\ドキュメント\ロボ団\pygame\images\nezubotto.png").convert_alpha() # オブジェクトの画像の読み込み(透過可能)
     object_image = pygame.transform.smoothscale(object_image, (90, 120)) # オブジェクトの画像のリサイズ
-    object = object_image.get_rect() # オブジェクトの矩形を取得
+    object1 = object_image.get_rect() # オブジェクトの矩形を取得
     player_image = pygame.image.load(r"C:\Users\hkazu\OneDrive\ドキュメント\ロボ団\pygame\images\robonyan.png").convert_alpha() # プレイヤーの画像の読み込み(透過可能)
     player_image = pygame.transform.smoothscale(player_image, (90, 110)) # プレイヤーの画像のリサイズ
     player = player_image.get_rect() # プレイヤーの矩形を取得
-    object.topleft = (0, 0) # オブジェクトの初期位置(矩形の左上座標)
+    object1.topleft = (0, 0) # オブジェクトの初期位置(矩形の左上座標)
     player.bottomright = (720, 480) # プレイヤーの初期位置(矩形の左下座標)
     reset_time = pygame.time.get_ticks() # 現在の時間を取得
     time = 0 # タイマーの初期化
@@ -107,7 +107,7 @@ def draw():
     screen.blit(text, (110, 350)) # 文字の描画
     timer = font.render(str(time), True, (0, 0, 0)) # タイマーの描画情報を変数に格納 (描画する文字，True，(0, 0, 0)はRGBの値)
     screen.blit(timer, (10, 440)) # タイマーの描画
-    screen.blit(object_image, object) # オブジェクトの描画
+    screen.blit(object_image, object1) # オブジェクトの描画
     screen.blit(player_image, player) # プレイヤーの描画
 
 #************************************************************************************************************************************************************************************************************
