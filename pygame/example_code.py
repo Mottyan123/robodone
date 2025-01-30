@@ -14,8 +14,10 @@ import pygame
 from pygame.locals import * # pygame用の全ての定数をインポート
 import sys #プログラムの終了処理を行うために必要
 
+SCREEN_WIDTH = 720
+SCREEN_HEIGHT = 480
 PLAYER_SPEED = 3
-OBJECT_SPEED = 1
+OBJECT_SPEED = 2
 
 #************************************************************************************************************************************************************************************************************
 
@@ -25,32 +27,25 @@ def player_move():
     pressed_key = pygame.key.get_pressed() # キーの状態を取得
     
     if pressed_key[K_LEFT]: # 左キーが押されたら
-        player.left -= PLAYER_SPEED # 左へ移動
+        player.x -= PLAYER_SPEED # 左へ移動
     if pressed_key[K_RIGHT]: # 右キーが押されたら
-        player.right += PLAYER_SPEED # 右へ移動
+        player.x += PLAYER_SPEED # 右へ移動
     if pressed_key[K_UP]: # 上キーが押されたら
-        player.top -= PLAYER_SPEED # 上へ移動
+        player.y -= PLAYER_SPEED # 上へ移動
     if pressed_key[K_DOWN]: # 下キーが押されたら
-        player.bottom += PLAYER_SPEED # 下へ移動
+        player.y += PLAYER_SPEED # 下へ移動
     
-    if player.left < 0: # プレイヤーの左端が画面の左端を超えたら
-        player.left = 0 # プレイヤーの左端を画面の左端に固定
-    if player.right > 720: # プレイヤーの右端が画面の右端を超えたら
-        player.right = 720 # プレイヤーの右端を画面の右端に固定
-    if player.top < 0: # プレイヤーの上端が画面の上端を超えたら
-        player.top = 0 # プレイヤーの上端を画面の上端に固定
-    if player.bottom > 480: # プレイヤーの下端が画面の下端を超えたら
-        player.bottom = 480 # プレイヤーの下端を画面の下端に固定
+    player.clamp_ip((0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)) # プレイヤーの移動範囲を制限
 
 #************************************************************************************************************************************************************************************************************
 
 def object_move():
     global object1
     
-    object1.centerx += OBJECT_SPEED
+    object1.x += OBJECT_SPEED
     
     if object1.left > 720:
-        object1.left = 0
+        object1.right = 0
 
 #************************************************************************************************************************************************************************************************************
 
@@ -71,9 +66,12 @@ def timer():
 #************************************************************************************************************************************************************************************************************
 
 def reset():
-    global background_image, object_image, object1, player_image, player # Pygameのインスタンスをグローバル化
+    global screen, font, background_image, object_image, object1, player_image, player # Pygameのインスタンスをグローバル化
     global reset_time, time
     
+    screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT)) # 画面サイズの設定 (幅、高さ) , 第2引数にFULLSCREENを指定すると全画面表示
+    screen.fill((255, 255, 255)) # 背景を指定色に塗りつぶし (0, 0, 0)はRGBの値
+    font = pygame.font.SysFont("meiryo", 27) # フォントの設定（フォント名、サイズ）
     background_image = pygame.image.load(r"C:\Users\hkazu\OneDrive\ドキュメント\ロボ団\pygame\images\background.png") # 背景画像の読み込み
     background_image = pygame.transform.smoothscale(background_image, (720, 480)) # 背景画像のリサイズ
     object_image = pygame.image.load(r"C:\Users\hkazu\OneDrive\ドキュメント\ロボ団\pygame\images\nezubotto.png").convert_alpha() # オブジェクトの画像の読み込み(透過可能)
@@ -112,21 +110,17 @@ def draw():
 
 #************************************************************************************************************************************************************************************************************
 
-def init():
-    global screen, font # Pygameのインスタンスをグローバル化
-
+def main():
     pygame.init() # Pygameの初期化
     pygame.display.set_caption("example") # タイトルバーの設定（表示する文字を指定）
-    screen = pygame.display.set_mode((720, 480)) # 画面サイズの設定 (幅、高さ) , 第2引数にFULLSCREENを指定すると全画面表示
-    screen.fill((255, 255, 255)) # 背景を指定色に塗りつぶし (0, 0, 0)はRGBの値
-    font = pygame.font.SysFont("meiryo", 27) # フォントの設定（フォント名、サイズ）
     reset()
 
     while True:
-        pygame.display.update() # 画面を更新
-        pygame.time.Clock().tick(60) # FPSを60に固定
         update()
         draw()
+        pygame.display.update() # 画面を更新
+        pygame.time.Clock().tick(60) # FPSを30に固定
+        
         for event in pygame.event.get(): # イベント処理
             if event.type == QUIT: # 閉じるボタンが押されたら終了
                 pygame.quit()  # Pygameの終了(画面閉じる)
@@ -134,4 +128,4 @@ def init():
 
 #*************************************************************************************************************************************************************************************************************
 
-init() # プログラムを実行
+main() # プログラムを実行
