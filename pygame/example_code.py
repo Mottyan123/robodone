@@ -4,6 +4,17 @@ pygameのサンプルコード
 dependent library:
 - pygame
 
+推奨ディレクトリ構造:
+|- ○○校_名前
+    |- 制作したゲームプログラム.py
+    |- images
+        |- プレイヤー画像.png
+        |- オブジェクト画像.png
+        |- 背景画像.png
+    |- music
+        |- BGM.mp3
+        |- SE.mp3
+
 @Author: Kazunori Hashimoto
 
 2025robodone
@@ -12,6 +23,7 @@ dependent library:
 
 import pygame
 from pygame.locals import * # pygame用の全ての定数をインポート
+from pathlib import * # ファイルのパスを取得するために必要
 import sys #プログラムの終了処理を行うために必要
 
 #***定数定義***
@@ -22,6 +34,7 @@ OBJECT_SPEED = 2
 
 #***pygameの初期化***
 pygame.init() # Pygameの初期化
+pygame.mixer.init() # 音楽管理モジュールの初期化
 pygame.display.set_caption("example") # タイトルバーの設定（表示する文字を指定）
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT)) # 画面サイズの設定 (幅、高さ) , 第2引数にFULLSCREENを指定すると全画面表示
 screen.fill((255, 255, 255)) # 背景を指定色に塗りつぶし (0, 0, 0)はRGBの値
@@ -29,10 +42,13 @@ screen.fill((255, 255, 255)) # 背景を指定色に塗りつぶし (0, 0, 0)は
 #***フォントの設定***
 font = pygame.font.SysFont("meiryo", 27) # フォントの設定（フォント名、サイズ）
 
-#***画像の読み込みとリサイズ***
-background_image = pygame.transform.smoothscale(pygame.image.load("images/background.png"),(SCREEN_WIDTH, SCREEN_HEIGHT)) # 背景画像のリサイズと背景画像の読み込み(絶対パスでも相対パスでも可)
-object_image = pygame.transform.smoothscale(pygame.image.load("images/nezubotto.png").convert_alpha(), (90, 120)) # オブジェクトの画像の読み込み(透過可能)
-player_image = pygame.transform.smoothscale(pygame.image.load("images/robonyan.png").convert_alpha(), (90, 110)) # プレイヤーの画像の読み込み(透過可能)
+#***各ファイルの読み込みと設定と画像のリサイズ***
+background_image = pygame.transform.smoothscale(pygame.image.load(Path(__file__).parent/"images"/"background.png"),(SCREEN_WIDTH, SCREEN_HEIGHT)) # 背景画像のリサイズと背景画像の読み込み(絶対パスでも相対パスでも可)
+object_image = pygame.transform.smoothscale(pygame.image.load(Path(__file__).parent/"images"/"nezubotto.png").convert_alpha(), (90, 120)) # オブジェクトの画像の読み込み(透過可能)
+player_image = pygame.transform.smoothscale(pygame.image.load(Path(__file__).parent/"images"/"robonyan.png").convert_alpha(), (90, 110)) # プレイヤーの画像の読み込み(透過可能)
+pygame.mixer.music.load(Path(__file__).parent/"music"/"BGM.mp3") # BGMファイルの読み込み
+pygame.mixer.music.set_volume(0.5) # BGMの音量を50%に設定
+pygame.mixer.music.play(-1) # BGMを無限ループで再生
 
 #***矩形オブジェクトの定義***
 object1 = object_image.get_rect() # オブジェクトの矩形を取得
