@@ -35,7 +35,7 @@ OBJECT_SPEED = 2
 #***pygameの初期化***
 pygame.init() # Pygameの初期化
 pygame.mixer.init() # 音楽管理モジュールの初期化
-pygame.display.set_caption("example") # タイトルバーの設定（表示する文字を指定）
+pygame.display.set_caption("2025robodone") # タイトルバーの設定（表示する文字を指定）
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT)) # 画面サイズの設定 (幅、高さ) , 第2引数にFULLSCREENを指定すると全画面表示
 screen.fill((255, 255, 255)) # 背景を指定色に塗りつぶし (0, 0, 0)はRGBの値
 
@@ -121,8 +121,8 @@ def update():
 
 def draw(): # 描画コード順にレイヤーが決まる
     screen.blit(background_image, (0, 0)) # 背景画像の描画
-    text = font.render("pygameのプログラミングはじまるよぉ～!", True, (0, 0, 0)) # 文字の描画情報を変数に格納 (描画する文字，True，(0, 0, 0)はRGBの値)
-    screen.blit(text, (110, 350)) # 文字の描画
+    text = font.render("pygameでゲーム制作に挑戦してみよう！", True, (0, 0, 0)) # 文字の描画情報を変数に格納 (描画する文字，True，(0, 0, 0)はRGBの値)
+    screen.blit(text, (115, 360)) # 文字の描画
     timer = font.render(str(time), True, (0, 0, 0)) # タイマーの描画情報を変数に格納 (描画する文字，True，(0, 0, 0)はRGBの値)
     screen.blit(timer, (10, 440)) # タイマーの描画
     screen.blit(object_image, object1) # オブジェクトの描画
