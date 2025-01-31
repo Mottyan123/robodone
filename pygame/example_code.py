@@ -72,12 +72,12 @@ def reset():
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT)) # 画面サイズの設定 (幅、高さ) , 第2引数にFULLSCREENを指定すると全画面表示
     screen.fill((255, 255, 255)) # 背景を指定色に塗りつぶし (0, 0, 0)はRGBの値
     font = pygame.font.SysFont("meiryo", 27) # フォントの設定（フォント名、サイズ）
-    background_image = pygame.image.load(r"C:\Users\hkazu\OneDrive\ドキュメント\ロボ団\pygame\images\background.png") # 背景画像の読み込み
+    background_image = pygame.image.load("images/background.png") # 背景画像の読み込み(絶対パスでも相対パスでも可)
     background_image = pygame.transform.smoothscale(background_image, (720, 480)) # 背景画像のリサイズ
-    object_image = pygame.image.load(r"C:\Users\hkazu\OneDrive\ドキュメント\ロボ団\pygame\images\nezubotto.png").convert_alpha() # オブジェクトの画像の読み込み(透過可能)
+    object_image = pygame.image.load("images/nezubotto.png").convert_alpha() # オブジェクトの画像の読み込み(透過可能)
     object_image = pygame.transform.smoothscale(object_image, (90, 120)) # オブジェクトの画像のリサイズ
     object1 = object_image.get_rect() # オブジェクトの矩形を取得
-    player_image = pygame.image.load(r"C:\Users\hkazu\OneDrive\ドキュメント\ロボ団\pygame\images\robonyan.png").convert_alpha() # プレイヤーの画像の読み込み(透過可能)
+    player_image = pygame.image.load("images/robonyan.png").convert_alpha() # プレイヤーの画像の読み込み(透過可能)
     player_image = pygame.transform.smoothscale(player_image, (90, 110)) # プレイヤーの画像のリサイズ
     player = player_image.get_rect() # プレイヤーの矩形を取得
     object1.topleft = (0, 0) # オブジェクトの初期位置(矩形の左上座標)
@@ -110,7 +110,7 @@ def draw():
 
 #************************************************************************************************************************************************************************************************************
 
-def main():
+def init():
     pygame.init() # Pygameの初期化
     pygame.display.set_caption("example") # タイトルバーの設定（表示する文字を指定）
     reset()
@@ -128,4 +128,4 @@ def main():
 
 #*************************************************************************************************************************************************************************************************************
 
-main() # プログラムを実行
+init() # プログラムを実行
